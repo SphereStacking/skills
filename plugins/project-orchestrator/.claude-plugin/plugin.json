@@ -1,0 +1,5 @@
+{
+  "name": "project-orchestrator",
+  "description": "Multi-phase project orchestrator with manager pattern. Plans projects in phases, delegates implementation to specialized agents, runs review cycles, and enforces Go/No-Go gates.",
+  "version": "1.0.0"
+}

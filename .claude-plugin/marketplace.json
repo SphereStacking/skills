@@ -1,0 +1,13 @@
+{
+  "name": "sphere-skills",
+  "owner": {
+    "name": "SphereStacking"
+  },
+  "plugins": [
+    {
+      "name": "project-orchestrator",
+      "source": "./plugins/project-orchestrator",
+      "description": "マルチフェーズプロジェクトオーケストレーター。フェーズ分割で計画し、実装を委譲し、レビューを実行し、Go/No-Go ゲートを管理する。"
+    }
+  ]
+}
