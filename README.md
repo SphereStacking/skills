@@ -10,6 +10,7 @@ Claude Code プラグインコレクション。
 
 # 2. プラグインをインストール
 /plugin install project-orchestrator@sphere-skills
+/plugin install spec-architect@sphere-skills
 ```
 
 ## プラグイン一覧
