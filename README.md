@@ -5,7 +5,11 @@ Claude Code プラグインコレクション。
 ## インストール
 
 ```
+# 1. マーケットプレースをカタログに登録
 /plugin marketplace add SphereStacking/skills
+
+# 2. プラグインをインストール
+/plugin install project-orchestrator@sphere-skills
 ```
 
 ## プラグイン一覧
