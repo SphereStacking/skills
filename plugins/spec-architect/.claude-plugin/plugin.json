@@ -1,0 +1,5 @@
+{
+  "name": "spec-architect",
+  "description": "仕様書を徹底レビューし、詳細設計書に落とし込むプラグイン。レビュー → 設計 → ハンドオフの3モードで仕様書から詳細設計書を生成し、project-orchestrator に連携可能。",
+  "version": "1.0.0"
+}

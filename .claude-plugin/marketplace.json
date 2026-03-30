@@ -8,6 +8,11 @@
       "name": "project-orchestrator",
       "source": "./plugins/project-orchestrator",
       "description": "マルチフェーズプロジェクトオーケストレーター。フェーズ分割で計画し、実装を委譲し、レビューを実行し、Go/No-Go ゲートを管理する。"
+    },
+    {
+      "name": "spec-architect",
+      "source": "./plugins/spec-architect",
+      "description": "仕様書レビュー・詳細設計書生成。3観点で仕様書を徹底レビューし、詳細設計書に落とし込み、orchestrator に連携する。"
     }
   ]
 }

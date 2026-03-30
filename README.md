@@ -31,6 +31,23 @@ Claude Code プラグインコレクション。
 /orchestrate continue         # 中断したフェーズを再開
 ```
 
+### [spec-architect](./plugins/spec-architect)
+
+仕様書レビュー・詳細設計書生成プラグイン。
+
+- 3つの並列エージェント（完全性・一貫性・実現可能性）で仕様書を徹底レビュー
+- レビュー済み仕様書から12セクションの詳細設計書を自動生成
+- 品質ゲートで REVIEW → DESIGN → HANDOFF の遷移を管理
+- 完成した設計書を `/orchestrate generate` に連携可能
+
+**コマンド:**
+
+```
+/spec-architect review docs/spec.md  # 仕様書をレビュー
+/spec-architect design               # 詳細設計書を生成
+/spec-architect handoff              # orchestrator に連携
+```
+
 ## ライセンス
 
 MIT
