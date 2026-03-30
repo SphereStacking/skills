@@ -4,8 +4,8 @@ Claude Code プラグインコレクション。
 
 ## インストール
 
-```bash
-claude plugin add github:SphereStacking/skills
+```
+/plugin marketplace add SphereStacking/skills
 ```
 
 ## プラグイン一覧
