@@ -32,6 +32,11 @@
 
 ## エージェント委譲パターン
 
+**外部エージェント依存:** 以下のエージェントはこのプラグインでは定義されていない。利用可能な環境を前提とする:
+- `code-architect` — アーキテクチャ設計用（`feature-dev` プラグイン等）
+- `code-reviewer` — コードレビュー用（`pr-review-toolkit` or `feature-dev` プラグイン等）
+- `Explore` — コードベース探索用（Claude Code 組み込みサブエージェント）
+
 ### アーキテクチャ設計用（複雑なフェーズ）
 ```
 1つの code-architect エージェントを起動:

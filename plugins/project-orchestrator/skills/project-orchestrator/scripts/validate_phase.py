@@ -22,11 +22,11 @@ REQUIRED_SECTIONS = [
 ]
 
 RECOMMENDED_SECTIONS = [
-    (r"\*\*(Prerequisites|前提):\*\*", "Prerequisites"),
+    (r"\*\*(Prerequisites|前提条件|前提):\*\*", "Prerequisites"),
     (r"^#+\s*(Verification|検証)", "Verification Steps"),
-    (r"Review 1:", "Review 1 (Code Review)"),
-    (r"Review 2:", "Review 2 (Expert Review)"),
-    (r"Review 3:", "Review 3 (Critical Review)"),
+    (r"(Review 1|レビュー 1):", "Review 1 (Code Review)"),
+    (r"(Review 2|レビュー 2):", "Review 2 (Expert Review)"),
+    (r"(Review 3|レビュー 3):", "Review 3 (Critical Review)"),
 ]
 
 
@@ -36,7 +36,8 @@ def _extract_section(content: str, heading_pattern: str) -> str:
     if not match:
         return ""
     start = match.start()
-    level = content[start:].split("\n")[0].count("#")
+    line = content[start:].split("\n")[0]
+    level = len(line) - len(line.lstrip("#"))
     rest = content[match.end():]
     next_heading = re.search(rf"^#{{1,{level}}}\s", rest, re.MULTILINE)
     if next_heading:
@@ -90,11 +91,9 @@ def main() -> None:
         sys.exit(1)
 
     all_pass = True
-    files_processed = 0
     for filepath in sys.argv[1:]:
         errors, warnings = validate(filepath)
         name = Path(filepath).name
-        files_processed += 1
 
         if errors:
             all_pass = False
@@ -107,10 +106,6 @@ def main() -> None:
         for w in warnings:
             print(f"   WARN:  {w}")
         print()
-
-    if files_processed == 0:
-        print("ERROR: No files were validated.")
-        sys.exit(1)
 
     sys.exit(0 if all_pass else 1)
 
