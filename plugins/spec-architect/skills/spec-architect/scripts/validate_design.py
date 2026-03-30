@@ -32,19 +32,19 @@ REQUIRED_FIELDS = [
 
 # Recommended content — warn if missing
 RECOMMENDED_CONTENT = [
-    (r"\|\s*(メソッド|Method)\s*\|.*\|\s*(パス|Path)\s*\|", "API エンドポイントテーブル"),
-    (r"\|\s*(カラム|Column)\s*\|.*\|\s*(型|Type)\s*\|", "DB テーブル定義テーブル"),
-    (r"\|\s*(コード|Code)\s*\|.*\|\s*(HTTP|ステータス|Status)\s*\|", "エラーコード一覧テーブル"),
-    (r"\|\s*(種別|Type)\s*\|.*\|\s*(対象|Target|ツール|Tool)\s*\|", "テスト種別テーブル"),
-    (r"\|\s*(メトリクス|Metrics?)\s*\|.*\|\s*(目標|Target|Goal)\s*\|", "パフォーマンス目標テーブル"),
+    (r"\|.*?(メソッド|Method).*?(パス|Path).*\|", "API エンドポイントテーブル"),
+    (r"\|.*?(カラム|Column).*?(型|Type).*\|", "DB テーブル定義テーブル"),
+    (r"\|.*?(コード|Code).*?(HTTP|ステータス|Status).*\|", "エラーコード一覧テーブル"),
+    (r"\|.*?(種別|Type).*?(対象|Target|ツール|Tool).*\|", "テスト種別テーブル"),
+    (r"\|.*?(メトリクス|Metrics?).*?(目標|Target|Goal).*\|", "パフォーマンス目標テーブル"),
 ]
 
 
 def validate(filepath: str) -> tuple[list[str], list[str]]:
     """Return (errors, warnings) for a design document."""
     path = Path(filepath)
-    if not path.exists():
-        return [f"File not found: {filepath}"], []
+    if not path.is_file():
+        return [f"Not a regular file or does not exist: {filepath}"], []
 
     try:
         content = path.read_text(encoding="utf-8")
@@ -63,7 +63,7 @@ def validate(filepath: str) -> tuple[list[str], list[str]]:
 
     # Check required fields
     for pattern, name in REQUIRED_FIELDS:
-        if not re.search(pattern, content, re.MULTILINE):
+        if not re.search(pattern, content, re.MULTILINE | re.IGNORECASE):
             errors.append(f"Missing required field: {name}")
 
     # Check traceability table

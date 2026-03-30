@@ -1,7 +1,6 @@
 ---
 description: 仕様書レビュー・詳細設計書生成。仕様書を徹底レビューし、詳細設計書に落とし込み、orchestrator に連携する。
 argument-hint: ["review docs/spec.md" or "design" or "handoff"]
-allowed-tools: ["Agent", "Bash", "Glob", "Grep", "Read", "Write", "Edit"]
 ---
 
 # 仕様書レビュー・詳細設計書生成
