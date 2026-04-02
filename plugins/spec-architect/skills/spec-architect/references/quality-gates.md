@@ -39,12 +39,12 @@
 
 | # | 条件 | 検証方法 |
 |---|------|---------|
-| 1 | 設計書が存在する | `.claude/spec-architect/{NNN}-{slug}/design.md` の存在確認 |
-| 2 | 全12必須セクションが存在する | `validate_design.py` のエラーが 0 件 |
-| 3 | 必須フィールドが埋まっている | `validate_design.py` のエラーが 0 件 |
-| 4 | トレーサビリティテーブルが存在する | `validate_design.py` のエラーが 0 件 |
-| 5 | Mermaid 図が1つ以上含まれる | `validate_design.py` のエラーが 0 件 |
-| 6 | バリデーションが全て通過 | `validate_design.py` の実行結果 |
+| 1 | design/ ディレクトリが存在する | `.claude/spec-architect/{NNN}-{slug}/design/` の存在確認 |
+| 2 | 全12セクションファイルが存在する | `validate_design.py` のエラーが 0 件 |
+| 3 | 各セクションに実質的な内容がある | `validate_design.py` のエラーが 0 件 |
+| 4 | トレーサビリティテーブルが存在する | `12-traceability.md` に要件対応表があること |
+| 5 | Mermaid 図がいずれかのセクションに含まれる | `validate_design.py` のエラーが 0 件 |
+| 6 | バリデーションが全て通過 | `validate_design.py .claude/spec-architect/{NNN}-{slug}/design/` の実行結果 |
 
 ### 推奨条件（通過していなくても進行可能、ただしユーザーに警告）
 

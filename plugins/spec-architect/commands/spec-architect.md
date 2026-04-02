@@ -115,6 +115,8 @@ argument-hint: ["review docs/spec.md" or "design" or "handoff"]
 
 **前提:** REVIEW モードで仕様書のレビューが完了していること。
 
+設計書は12セクションの独立した md ファイルとして生成する。各セクションを個別に生成・レビュー・修正できる。
+
 ### ステップ 1: レビュー済みデータの読み込み
 
 1. `.claude/spec-architect/` 配下のディレクトリ一覧を取得する
@@ -125,32 +127,64 @@ argument-hint: ["review docs/spec.md" or "design" or "handoff"]
 
 ### ステップ 2: 設計書テンプレートの読み込み
 
-`skills/spec-architect/references/design-template.md` を読み込む。
+1. `skills/spec-architect/references/design-template.md` を読み込む（全体構造とルールの把握）
+2. `.claude/spec-architect/{NNN}-{slug}/design/` ディレクトリを作成する
 
-### ステップ 3: spec-analyst エージェントで設計書生成
+### ステップ 3: セクション別設計書生成
 
-`spec-architect:spec-analyst` エージェントを起動する。プロンプトに以下を含める:
+12セクションを順番に生成する。各セクションごとに `spec-architect:spec-analyst` エージェントを起動する。
 
+**生成順序（依存関係を考慮）:**
+
+1. `01-overview.md` — 全体の方針を固める（最初に生成）
+2. `02-system-architecture.md` — 技術スタックとレイヤー構成
+3. `04-db-schema.md` — データモデル（API・コンポーネントの前提）
+4. `03-api-design.md` — API 設計（DB スキーマを参照）
+5. `05-component-design.md` — コンポーネント設計（API・DB を参照）
+6. `06-data-flow.md` — データフロー（コンポーネントを参照）
+7. `07-file-structure.md` — ファイル構成（コンポーネントを参照）
+8. `08-error-handling.md` — エラーハンドリング（API・コンポーネントを参照）
+9. `09-security.md` — セキュリティ設計（API・認証を参照）
+10. `10-test-strategy.md` — テスト戦略（全体を参照）
+11. `11-non-functional.md` — 非機能要件
+12. `12-traceability.md` — 仕様トレーサビリティ（全セクション完了後）
+
+各セクションの生成時、エージェントのプロンプトに以下を含める:
 - 仕様書の全文
 - レビューレポートの内容
-- 設計書テンプレート
+- 該当セクションのテンプレート（`skills/spec-architect/references/design-sections/{NN}-{name}.md`）
 - プロジェクトの技術スタック（コードベースから自動検出）
+- **既に生成済みのセクションの内容**（依存関係のあるセクション）
 
-### ステップ 4: バリデーション
+各セクション生成後:
+1. `.claude/spec-architect/{NNN}-{slug}/design/{NN}-{name}.md` に保存
+2. ユーザーに内容のサマリーを提示
+3. ユーザーが修正を求めた場合はエージェントを再起動して修正
+4. 承認されたら次のセクションへ
 
-`skills/spec-architect/scripts/validate_design.py` を設計書に対して実行する。
+### ステップ 4: インデックス生成
 
-- **全て合格:** ステップ 5 へ
-- **エラーあり:** エラーを修正し、再バリデーション。全合格するまで繰り返す
+全12セクション完了後、`00-index.md` を生成する。
+`design-template.md` の 00-index.md テンプレートに従い、各セクションへのリンクと一行サマリーを記載する。
+
+### ステップ 5: バリデーション
+
+`skills/spec-architect/scripts/validate_design.py` を design/ ディレクトリに対して実行する。
+
+```
+python validate_design.py .claude/spec-architect/{NNN}-{slug}/design/
+```
+
+- **全て合格:** ステップ 6 へ
+- **エラーあり:** エラーのあるセクションを特定し、該当セクションのみ修正。再バリデーション
 - **警告のみ:** 警告内容をユーザーに提示し、続行するか確認
 
-### ステップ 5: ユーザーレビュー
+### ステップ 6: ユーザー最終確認
 
-設計書をユーザーに提示し、フィードバックを求める。
+設計書のインデックス（`00-index.md`）をユーザーに提示し、最終確認を求める。
 
-- 修正要望がある場合: spec-analyst エージェントを再起動して修正。再バリデーション
-- 承認された場合: `.claude/spec-architect/{NNN}-{slug}/design.md` に保存
-- 提示:「詳細設計書が完成しました。`/spec-architect handoff` で orchestrator に連携できます。」
+- 特定セクションの修正要望がある場合: 該当セクションのみ再生成。他のセクションは影響がない限り変更しない
+- 承認された場合: 「詳細設計書が完成しました。`/spec-architect handoff` で orchestrator に連携できます。」
 
 ---
 
@@ -162,13 +196,13 @@ argument-hint: ["review docs/spec.md" or "design" or "handoff"]
 
 1. `.claude/spec-architect/` 配下のディレクトリ一覧を取得する
 2. プロジェクトが複数ある場合、一覧を提示してどれを使うか尋ねる
-3. 選択されたプロジェクトの `design.md` を読み込む
+3. 選択されたプロジェクトの `design/` ディレクトリ内の全セクションファイルを読み込む
 4. `skills/spec-architect/references/quality-gates.md` の DESIGN → HANDOFF 品質ゲートを確認する
 5. 品質ゲートを通過していない場合:「設計書が完成していません。先に `/spec-architect design` で設計書を完成させてください。」
 
 ### ステップ 2: フェーズ分割の推奨案
 
-設計書の各セクションを分析し、フェーズ分割の推奨案を整理する:
+設計書の各セクションファイルを分析し、フェーズ分割の推奨案を整理する:
 
 | フェーズ | 名前 | 対応する設計セクション | 推奨理由 |
 |---------|------|---------------------|---------|
@@ -188,7 +222,7 @@ argument-hint: ["review docs/spec.md" or "design" or "handoff"]
 
 {フェーズ分割テーブル}
 
-`/orchestrate generate` でフェーズドキュメントに変換できます。その際、この設計書 (`.claude/spec-architect/{NNN}-{slug}/design.md`) を参照してください。」
+`/orchestrate generate` でフェーズドキュメントに変換できます。その際、この設計書ディレクトリ (`.claude/spec-architect/{NNN}-{slug}/design/`) を参照してください。」
 
 ---
 
@@ -199,7 +233,8 @@ argument-hint: ["review docs/spec.md" or "design" or "handoff"]
 1. `.claude/spec-architect/` 配下のディレクトリ一覧を取得する。存在しない場合:「プロジェクトが見つかりません。`/spec-architect review {filepath}` でレビューを開始してください。」
 2. プロジェクトが複数ある場合、一覧を提示して選択を求める
 3. プロジェクトの状態を判定:
-   - `design.md` が存在 → 「設計書が完成しています。`/spec-architect handoff` で連携できます。」
+   - `design/` ディレクトリが存在し12セクション揃っている → 「設計書が完成しています。`/spec-architect handoff` で連携できます。」
+   - `design/` ディレクトリが存在し一部セクションのみ → 「設計書の生成途中です。`/spec-architect design` で続きを生成できます。」
    - `review-report.md` が存在し Critical/High が 0 件 → 「レビュー完了済みです。`/spec-architect design` で設計書を生成できます。」
    - `review-report.md` が存在し Critical/High が残存 → 「未解決の指摘があります。修正サイクルを続けましょう。」
    - `spec.md` のみ → 「レビューが未完了です。レビューを開始します。」
