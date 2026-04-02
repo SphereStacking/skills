@@ -9,27 +9,35 @@ Claude Code プラグインコレクション。
 /plugin marketplace add SphereStacking/skills
 
 # 2. プラグインをインストール
-/plugin install project-orchestrator@sphere-skills
+/plugin install spec-refiner@sphere-skills
 /plugin install spec-architect@sphere-skills
+/plugin install project-orchestrator@sphere-skills
+```
+
+## パイプライン
+
+```
+spec-refiner (START→CONTINUE) → spec-architect (REVIEW→DESIGN→HANDOFF) → project-orchestrator (GENERATE→EXECUTE)
+   ヒアリング・言語化            仕様レビュー・設計書生成               フェーズ実行・管理
 ```
 
 ## プラグイン一覧
 
-### [project-orchestrator](./plugins/project-orchestrator)
+### [spec-refiner](./plugins/spec-refiner)
 
-マルチフェーズプロジェクトオーケストレーター。
+ヒアリング・言語化プラグイン。
 
-- Claude の Plan モードで計画を立て、`/orchestrate generate` でフェーズドキュメントに構造化
-- `project-orchestrator:implementer` エージェントに実装を委譲
-- 3エージェント並列レビュー + Go/No-Go ゲートでフェーズを管理
-- `.claude/project-orchestrator/{NNN}-{slug}/` に複数プランを独立管理
+- ユーザーの「やりたいこと」を対話で徹底的にヒアリングし、言語化する
+- 完成度や整合性は求めない（それは spec-architect の役割）
+- ユーザーが明確に終了を告げるまでひたすら聞き続ける
+- コードベース分析で技術的コンテキストをバックグラウンド取得
+- ヒアリング記録を `/spec-architect review` にそのまま連携
 
 **コマンド:**
 
 ```
-/orchestrate generate         # 合意済みの計画をフェーズドキュメントに変換
-/orchestrate execute phase 0  # フェーズ 0 を実行
-/orchestrate continue         # 中断したフェーズを再開
+/spec-refiner start "認証システム"  # 新しいヒアリングを開始
+/spec-refiner continue              # 既存のヒアリングを再開
 ```
 
 ### [spec-architect](./plugins/spec-architect)
@@ -47,6 +55,23 @@ Claude Code プラグインコレクション。
 /spec-architect review docs/spec.md  # 仕様書をレビュー
 /spec-architect design               # 詳細設計書を生成
 /spec-architect handoff              # orchestrator に連携
+```
+
+### [project-orchestrator](./plugins/project-orchestrator)
+
+マルチフェーズプロジェクトオーケストレーター。
+
+- Claude の Plan モードで計画を立て、`/orchestrate generate` でフェーズドキュメントに構造化
+- `project-orchestrator:implementer` エージェントに実装を委譲
+- 3エージェント並列レビュー + Go/No-Go ゲートでフェーズを管理
+- `.claude/project-orchestrator/{NNN}-{slug}/` に複数プランを独立管理
+
+**コマンド:**
+
+```
+/orchestrate generate         # 合意済みの計画をフェーズドキュメントに変換
+/orchestrate execute phase 0  # フェーズ 0 を実行
+/orchestrate continue         # 中断したフェーズを再開
 ```
 
 ## ライセンス

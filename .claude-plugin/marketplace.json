@@ -13,6 +13,11 @@
       "name": "spec-architect",
       "source": "./plugins/spec-architect",
       "description": "仕様書レビュー・詳細設計書生成。3観点で仕様書を徹底レビューし、詳細設計書に落とし込み、orchestrator に連携する。"
+    },
+    {
+      "name": "spec-refiner",
+      "source": "./plugins/spec-refiner",
+      "description": "仕様書対話型詳細化。曖昧なアイデアや要件から構造化された質問で仕様書を段階的に生成し、spec-architect に連携する。"
     }
   ]
 }
