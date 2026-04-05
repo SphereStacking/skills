@@ -1,0 +1,5 @@
+{
+  "name": "research",
+  "description": "Multi-perspective research orchestrator. Dispatches parallel investigator agents (affirmative, critical, practical), merges findings, and runs a review pass before delivering balanced results.",
+  "version": "1.0.0"
+}
