@@ -18,6 +18,11 @@
       "name": "spec-refiner",
       "source": "./plugins/spec-refiner",
       "description": "仕様書対話型詳細化。曖昧なアイデアや要件から構造化された質問で仕様書を段階的に生成し、spec-architect に連携する。"
+    },
+    {
+      "name": "research",
+      "source": "./plugins/research",
+      "description": "複数観点リサーチオーケストレーター。3つの調査エージェント（肯定的・批判的・実践的）を並列起動して多角的に調査し、統合レビューでバランスの取れたレポートを生成する。"
     }
   ]
 }
