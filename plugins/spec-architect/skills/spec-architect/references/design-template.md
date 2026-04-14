@@ -5,7 +5,7 @@
 ## 出力構造
 
 ```
-.claude/works/{NNN}-{slug}/design/
+.claude/works/{NNN}-{slug}/06.design/
 ├── 00-index.md              ← 全体目次（自動生成）
 ├── 01-overview.md
 ├── 02-system-architecture.md

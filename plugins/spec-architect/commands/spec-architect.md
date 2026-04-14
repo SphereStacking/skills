@@ -38,7 +38,7 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 1. 引数で指定されたファイルパスから仕様書を読み込む
 2. `.claude/works/` 内の既存ディレクトリを確認し、次の連番を採番する
 3. 仕様書の内容から短いスラッグを生成する（例: `001-auth-system`, `002-payment-flow`）
-4. `.claude/works/{NNN}-{slug}/spec.md` に仕様書をコピーする
+4. `.claude/works/{NNN}-{slug}/03.spec.md` に仕様書をコピーする
 
 ### ステップ 2: 並列レビュー
 
@@ -73,7 +73,7 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 
 ### ステップ 4: レビューレポート生成
 
-`.claude/works/{NNN}-{slug}/review-report.md` を生成:
+`.claude/works/{NNN}-{slug}/04.review-report.md` を生成:
 
 ```markdown
 # レビューレポート: {仕様書タイトル}
@@ -134,7 +134,7 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 ### ステップ 1: データの読み込み
 
 1. `.claude/works/` 配下のプロジェクトを選択する
-2. `spec.md` と `review-report.md` を読み込む
+2. `03.spec.md` と `04.review-report.md` を読み込む
 3. コードベースを分析し、現在の技術スタック（言語、フレームワーク、既存の依存関係）を把握する
 
 ### ステップ 2: 技術領域の洗い出し
@@ -237,7 +237,7 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 
 ### ステップ 7: 選定結果の保存
 
-承認された選定レポートを `.claude/works/{NNN}-{slug}/tech-selection.md` に保存する。
+承認された選定レポートを `.claude/works/{NNN}-{slug}/05.tech-selection.md` に保存する。
 
 このファイルは DESIGN モードで各セクション生成時に参照され、選定された技術に基づいた設計が行われる。
 
@@ -253,15 +253,15 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 
 1. `.claude/works/` 配下のディレクトリ一覧を取得する
 2. プロジェクトが複数ある場合、一覧を提示してどれを使うか尋ねる。1つだけの場合はそのまま選択
-3. 選択されたプロジェクトの `spec.md` と `review-report.md` を読み込む
-4. `tech-selection.md` が存在する場合、読み込む。存在しない場合は警告を提示:「技術選定が未実施です。`/spec-architect tech-select` で技術選定を行うことを推奨します。スキップして設計に進みますか？」
+3. 選択されたプロジェクトの `03.spec.md` と `04.review-report.md` を読み込む
+4. `05.tech-selection.md` が存在する場合、読み込む。存在しない場合は警告を提示:「技術選定が未実施です。`/spec-architect tech-select` で技術選定を行うことを推奨します。スキップして設計に進みますか？」
 5. `skills/spec-architect/references/quality-gates.md` の REVIEW → DESIGN 品質ゲートを確認する
 6. 品質ゲートを通過していない場合:「レビューが完了していません。先に `/spec-architect review` でレビューを完了してください。」
 
 ### ステップ 2: 設計書テンプレートの読み込み
 
 1. `skills/spec-architect/references/design-template.md` を読み込む（全体構造とルールの把握）
-2. `.claude/works/{NNN}-{slug}/design/` ディレクトリを作成する
+2. `.claude/works/{NNN}-{slug}/06.design/` ディレクトリを作成する
 
 ### ステップ 3: セクション別設計書生成
 
@@ -285,13 +285,13 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 各セクションの生成時、エージェントのプロンプトに以下を含める:
 - 仕様書の全文
 - レビューレポートの内容
-- **技術選定レポートの内容**（`tech-selection.md` が存在する場合。選定された技術・ライブラリに基づいて設計すること）
+- **技術選定レポートの内容**（`05.tech-selection.md` が存在する場合。選定された技術・ライブラリに基づいて設計すること）
 - 該当セクションのテンプレート（`skills/spec-architect/references/design-sections/{NN}-{name}.md`）
 - プロジェクトの技術スタック（コードベースから自動検出）
 - **既に生成済みのセクションの内容**（依存関係のあるセクション）
 
 各セクション生成後:
-1. `.claude/works/{NNN}-{slug}/design/{NN}-{name}.md` に保存
+1. `.claude/works/{NNN}-{slug}/06.design/{NN}-{name}.md` に保存
 2. **ステップ 4 の対立レビューサイクル**を実行
 3. レビュー通過後、次のセクションへ
 
@@ -331,7 +331,7 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 - 仕様書（参照用）
 - 既生成セクション（整合性確認用）
 
-修正後のセクションで `.claude/works/{NNN}-{slug}/design/{NN}-{name}.md` を上書き保存する。
+修正後のセクションで `.claude/works/{NNN}-{slug}/06.design/{NN}-{name}.md` を上書き保存する。
 
 #### 4-3: 調停判定
 
@@ -369,7 +369,7 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 
 #### 4-5: レビューログの保存
 
-各セクションのレビューサイクルのログを `.claude/works/{NNN}-{slug}/design-review-log.md` に追記する:
+各セクションのレビューサイクルのログを `.claude/works/{NNN}-{slug}/07.design-review-log.md` に追記する:
 
 ```markdown
 ## {セクション名} レビューログ
@@ -387,10 +387,10 @@ argument-hint: ["review docs/spec.md" or "tech-select" or "design" or "handoff"]
 
 ### ステップ 6: バリデーション
 
-`skills/spec-architect/scripts/validate_design.py` を design/ ディレクトリに対して実行する。
+`skills/spec-architect/scripts/validate_design.py` を 06.design/ ディレクトリに対して実行する。
 
 ```
-python validate_design.py .claude/works/{NNN}-{slug}/design/
+python validate_design.py .claude/works/{NNN}-{slug}/06.design/
 ```
 
 - **全て合格:** ステップ 7 へ
@@ -423,7 +423,7 @@ python validate_design.py .claude/works/{NNN}-{slug}/design/
 
 1. `.claude/works/` 配下のディレクトリ一覧を取得する
 2. プロジェクトが複数ある場合、一覧を提示してどれを使うか尋ねる
-3. 選択されたプロジェクトの `design/` ディレクトリ内の全セクションファイルを読み込む
+3. 選択されたプロジェクトの `06.design/` ディレクトリ内の全セクションファイルを読み込む
 4. `skills/spec-architect/references/quality-gates.md` の DESIGN → HANDOFF 品質ゲートを確認する
 5. 品質ゲートを通過していない場合:「設計書が完成していません。先に `/spec-architect design` で設計書を完成させてください。」
 
@@ -450,7 +450,7 @@ python validate_design.py .claude/works/{NNN}-{slug}/design/
 
 {フェーズ分割テーブル}
 
-設計書ディレクトリ: `.claude/works/{NNN}-{slug}/design/`
+設計書ディレクトリ: `.claude/works/{NNN}-{slug}/06.design/`
 
 次のアクションを選択してください:
   1. `/orchestrate generate` でフェーズドキュメントに変換する
@@ -469,7 +469,7 @@ python validate_design.py .claude/works/{NNN}-{slug}/design/
 2. プロジェクトが複数ある場合、一覧を提示して選択を求める
 3. プロジェクトの状態を判定し、状態に応じた選択肢を提示:
 
-**設計書完成済み**（`design/` に12セクション揃っている）:
+**設計書完成済み**（`06.design/` に12セクション揃っている）:
 ```
 プロジェクト {NNN}-{slug} の設計書は完成しています。
 
@@ -479,7 +479,7 @@ python validate_design.py .claude/works/{NNN}-{slug}/design/
   3. レビューレポートを振り返る
 ```
 
-**設計書生成途中**（`design/` に一部セクションのみ）:
+**設計書生成途中**（`06.design/` に一部セクションのみ）:
 ```
 プロジェクト {NNN}-{slug} の設計書は生成途中です。
   完了: {完了セクション一覧}
@@ -491,7 +491,7 @@ python validate_design.py .claude/works/{NNN}-{slug}/design/
   3. レビューレポートを振り返る
 ```
 
-**レビュー完了・技術選定済み**（Critical/High が 0 件、`tech-selection.md` あり）:
+**レビュー完了・技術選定済み**（Critical/High が 0 件、`05.tech-selection.md` あり）:
 ```
 プロジェクト {NNN}-{slug} のレビューと技術選定が完了しています。
 
@@ -502,7 +502,7 @@ python validate_design.py .claude/works/{NNN}-{slug}/design/
   4. 仕様書を確認する
 ```
 
-**レビュー完了・技術選定未実施**（Critical/High が 0 件、`tech-selection.md` なし）:
+**レビュー完了・技術選定未実施**（Critical/High が 0 件、`05.tech-selection.md` なし）:
 ```
 プロジェクト {NNN}-{slug} のレビューは完了しています。技術選定は未実施です。
 
@@ -524,7 +524,7 @@ python validate_design.py .claude/works/{NNN}-{slug}/design/
   3. 仕様書を確認する
 ```
 
-**レビュー未実施**（`spec.md` のみ）:
+**レビュー未実施**（`03.spec.md` のみ）:
 ```
 プロジェクト {NNN}-{slug} はレビュー未実施です。
 
