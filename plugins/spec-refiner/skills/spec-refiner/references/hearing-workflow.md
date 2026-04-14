@@ -151,13 +151,13 @@ spec-refiner の対話の進め方と、記録の更新プロセス。
 - {未決事項 2}
 
 ### 保存先
-`.claude/spec-refiner/{NNN}-{slug}/hearing.md`
+`.claude/works/{NNN}-{slug}/hearing.md`
 ```
 
 ### 3. 次のステップ案内
 
-「ヒアリング内容は `.claude/spec-refiner/{NNN}-{slug}/hearing.md` に保存しました。
+「ヒアリング内容は `.claude/works/{NNN}-{slug}/hearing.md` に保存しました。
 
 次のステップ:
-- `/spec-architect review .claude/spec-refiner/{NNN}-{slug}/hearing.md` で仕様の深掘りとレビューに進めます
+- `/spec-architect review .claude/works/{NNN}-{slug}/hearing.md` で仕様の深掘りとレビューに進めます
 - `/spec-refiner continue` でヒアリングを再開することもできます」

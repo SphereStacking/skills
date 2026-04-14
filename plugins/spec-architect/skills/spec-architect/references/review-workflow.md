@@ -16,7 +16,7 @@
 ### プロジェクトディレクトリの作成
 
 ```
-.claude/spec-architect/{NNN}-{slug}/
+.claude/works/{NNN}-{slug}/
 ├── spec.md              # 仕様書のコピー
 ├── review-report.md     # レビューレポート（レビュー後に生成）
 └── design.md            # 詳細設計書（設計モード後に生成）

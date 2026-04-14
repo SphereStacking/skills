@@ -12,10 +12,10 @@
 
 | # | 条件 | 検証方法 |
 |---|------|---------|
-| 1 | レビューレポートが存在する | `.claude/spec-architect/{NNN}-{slug}/review-report.md` の存在確認 |
+| 1 | レビューレポートが存在する | `.claude/works/{NNN}-{slug}/review-report.md` の存在確認 |
 | 2 | Critical 指摘が 0 件 | レビューレポートの Critical カウントを確認 |
 | 3 | High 指摘が 0 件 | レビューレポートの High カウントを確認 |
-| 4 | 仕様書が保存されている | `.claude/spec-architect/{NNN}-{slug}/spec.md` の存在確認 |
+| 4 | 仕様書が保存されている | `.claude/works/{NNN}-{slug}/spec.md` の存在確認 |
 
 ### 推奨条件（通過していなくても進行可能、ただしユーザーに警告）
 
@@ -39,12 +39,12 @@
 
 | # | 条件 | 検証方法 |
 |---|------|---------|
-| 1 | design/ ディレクトリが存在する | `.claude/spec-architect/{NNN}-{slug}/design/` の存在確認 |
+| 1 | design/ ディレクトリが存在する | `.claude/works/{NNN}-{slug}/design/` の存在確認 |
 | 2 | 全12セクションファイルが存在する | `validate_design.py` のエラーが 0 件 |
 | 3 | 各セクションに実質的な内容がある | `validate_design.py` のエラーが 0 件 |
 | 4 | トレーサビリティテーブルが存在する | `12-traceability.md` に要件対応表があること |
 | 5 | Mermaid 図がいずれかのセクションに含まれる | `validate_design.py` のエラーが 0 件 |
-| 6 | バリデーションが全て通過 | `validate_design.py .claude/spec-architect/{NNN}-{slug}/design/` の実行結果 |
+| 6 | バリデーションが全て通過 | `validate_design.py .claude/works/{NNN}-{slug}/design/` の実行結果 |
 
 ### 推奨条件（通過していなくても進行可能、ただしユーザーに警告）
 

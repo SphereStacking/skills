@@ -30,4 +30,4 @@ description: >
 - **バリデーション**: `validate_design.py` で design/ ディレクトリ全体の構造を自動検証
 - **トレーサビリティ**: 仕様要件 → 設計セクションの対応を追跡
 - **orchestrator 連携**: 完成した設計書からフェーズ分割を推奨し、`/orchestrate generate` に連携
-- **プロジェクト管理**: `.claude/spec-architect/{NNN}-{slug}/` 配下にプロジェクトごとに独立管理
+- **プロジェクト管理**: `.claude/works/{NNN}-{slug}/` 配下にプロジェクトごとに独立管理
