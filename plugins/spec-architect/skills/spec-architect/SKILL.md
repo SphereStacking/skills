@@ -23,11 +23,11 @@ description: >
 
 - **3観点並列レビュー**: 完全性・一貫性・実現可能性の3つの Explore エージェントで仕様書をレビュー
 - **トリアージ**: レビュー指摘を Critical/High/Medium/Low に分類し、Critical/High が 0 件になるまで修正サイクル
-- **セクション分割設計書**: 12セクションを独立した md ファイルとして生成（`design/01-overview.md` 〜 `design/12-traceability.md`）
+- **セクション分割設計書**: 12セクションを独立した md ファイルとして生成（`06.design/01-overview.md` 〜 `06.design/12-traceability.md`）
 - **セクション単位生成**: spec-analyst エージェントが1セクションずつ生成。依存関係順に段階的に構築
 - **対立レビューサイクル**: 各セクション生成後、批判的アーキテクト（design-critic）がレビューし、修正後に調停アーキテクト（design-mediator）が判定。3サイクル超でユーザー判断
 - **品質ゲート**: REVIEW → DESIGN → HANDOFF の各遷移に品質ゲートを設置
-- **バリデーション**: `validate_design.py` で design/ ディレクトリ全体の構造を自動検証
+- **バリデーション**: `validate_design.py` で 06.design/ ディレクトリ全体の構造を自動検証
 - **トレーサビリティ**: 仕様要件 → 設計セクションの対応を追跡
 - **orchestrator 連携**: 完成した設計書からフェーズ分割を推奨し、`/orchestrate generate` に連携
 - **プロジェクト管理**: `.claude/works/{NNN}-{slug}/` 配下にプロジェクトごとに独立管理
